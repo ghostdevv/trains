@@ -12,6 +12,8 @@
   "dependencies": {
     "@astrojs/svelte": "^4.0.2",
     "astro": "^3.1.1",
+    "ghostsui": "^1.6.0",
+    "sass": "^1.67.0",
     "svelte": "^4.0.0"
   }
 }
