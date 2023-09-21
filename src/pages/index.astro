@@ -1,8 +1,18 @@
 ---
+import type { LiveTimes } from '$lib/types/liveTimes.d.ts';
+import TimeTable from '$lib/TimeTable.svelte';
 import Global from '$layouts/Global.astro';
 // import Search from '$lib/Search.svelte';
+
+const response = await fetch(
+	'https://api.rtt.io/api/v1/json/search/WAT/2023/09/22',
+	{ headers: { Authorization: import.meta.env.RTT_AUTH } },
+);
+
+const data: LiveTimes = await response.json();
 ---
 
 <Global>
 	<!-- <Search client:load /> -->
+	<TimeTable stationName={data.location.name} services={data.services} />
 </Global>
