@@ -3,7 +3,7 @@ import type { LiveTimes } from '$lib/types/liveTimes.d.ts';
 import TimeTable from '$lib/time-table/TimeTable.astro';
 import stations from '$lib/data/stations.json';
 import Global from '$layouts/Global.astro';
-import { ofetch } from 'ofetch';
+import { rtt } from '$lib/rtt';
 
 const crs = Astro.params.crs;
 
@@ -11,13 +11,7 @@ if (crs?.length != 3 || !stations.some((s) => s.crs == crs)) {
 	return Astro.redirect('/?error=rtt-station-not-found');
 }
 
-const data = await ofetch<LiveTimes>(
-	`https://api.rtt.io/api/v1/json/search/${crs}`,
-	{ headers: { Authorization: import.meta.env.RTT_AUTH } },
-).catch((e) => {
-	console.error('rrt error', e);
-	return null;
-});
+const data = await rtt<LiveTimes>(`/search/${crs}`);
 
 if (!data || !data.location) {
 	return Astro.redirect(
