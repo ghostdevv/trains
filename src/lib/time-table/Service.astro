@@ -1,7 +1,6 @@
 ---
 import type { Service } from '$lib/types/liveTimes.d';
-import { db, eq, ClassCache } from 'astro:db';
-import { ofetch } from 'ofetch';
+import { fetchClasses } from '$lib/rtt';
 
 interface Props {
 	service: Service;
@@ -12,37 +11,7 @@ const { service } = Astro.props;
 const rttLink = `https://www.realtimetrains.co.uk/service/gb-nr:${service.serviceUid}/${service.runDate}/detailed`;
 const rrLink = `https://live.rail-record.co.uk/train.php/?c=${service.serviceUid}&d=${service.runDate}`;
 
-const classes = await fetchClasses();
-
-async function fetchClasses(): Promise<number[]> {
-	const saved = await db
-		.select()
-		.from(ClassCache)
-		.where(eq(ClassCache.rtt_url, rttLink));
-
-	if (saved.length) {
-		return saved.map((record) => record.class_number);
-	}
-
-	const data = await ofetch(rttLink, { responseType: 'text' });
-	const matches = data.matchAll(/<span class="identity">(\d+)<\/span>/g);
-
-	const classes = Array.from(matches)
-		.flatMap(([, classNumber]) => classNumber && parseInt(classNumber))
-		.filter(
-			(classNumber): classNumber is number =>
-				typeof classNumber == 'number' && !isNaN(classNumber),
-		);
-
-	await db.insert(ClassCache).values(
-		classes.map((class_number) => ({
-			rtt_url: rttLink,
-			class_number,
-		})),
-	);
-
-	return classes;
-}
+const classes = await fetchClasses(rttLink);
 ---
 
 <tr>
