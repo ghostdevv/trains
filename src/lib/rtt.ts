@@ -20,34 +20,39 @@ export async function rtt<T>(path: string) {
 	});
 }
 
-export async function fetchClasses(rttLink: string): Promise<number[]> {
-	const saved = await db
-		.select()
-		.from(ClassCache)
-		.where(eq(ClassCache.rtt_url, rttLink));
+export async function fetchClasses(rttLink: string): Promise<number[] | null> {
+	try {
+		const saved = await db
+			.select()
+			.from(ClassCache)
+			.where(eq(ClassCache.rtt_url, rttLink));
 
-	if (saved.length) {
-		return saved.map((record) => record.class_number);
+		if (saved.length) {
+			return saved.map((record) => record.class_number);
+		}
+
+		const data = await ofetch(rttLink, { responseType: 'text' });
+		const matches = data.matchAll(/<span class="identity">(\d+)<\/span>/g);
+
+		const classes = Array.from(matches)
+			.flatMap(([, classNumber]) => classNumber && parseInt(classNumber))
+			.filter(
+				(classNumber): classNumber is number =>
+					typeof classNumber == 'number' && !isNaN(classNumber),
+			);
+
+		if (classes.length > 0) {
+			await db.insert(ClassCache).values(
+				classes.map((class_number) => ({
+					rtt_url: rttLink,
+					class_number,
+				})),
+			);
+		}
+
+		return classes;
+	} catch (error) {
+		console.error('failed to fetch classes', error);
+		return null;
 	}
-
-	const data = await ofetch(rttLink, { responseType: 'text' });
-	const matches = data.matchAll(/<span class="identity">(\d+)<\/span>/g);
-
-	const classes = Array.from(matches)
-		.flatMap(([, classNumber]) => classNumber && parseInt(classNumber))
-		.filter(
-			(classNumber): classNumber is number =>
-				typeof classNumber == 'number' && !isNaN(classNumber),
-		);
-
-	if (classes.length > 0) {
-		await db.insert(ClassCache).values(
-			classes.map((class_number) => ({
-				rtt_url: rttLink,
-				class_number,
-			})),
-		);
-	}
-
-	return classes;
 }

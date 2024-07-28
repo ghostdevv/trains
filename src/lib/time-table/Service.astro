@@ -20,7 +20,7 @@ const classes = await fetchClasses(rttLink);
 	<td>{service.locationDetail.destination.map((o) => o.description)}</td>
 	<td>{service.atocCode}</td>
 	<td>{service.serviceUid}</td>
-	<td>{classes.join(', ')}</td>
+	<td>{classes ? classes.join(', ') : 'failed'}</td>
 	<td><a target="_blank" href={rttLink}> RTT </a></td>
 	<td><a target="_blank" href={rrLink}> RR </a></td>
 </tr>
