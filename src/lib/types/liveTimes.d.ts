@@ -1,7 +1,7 @@
 export interface LiveTimes {
 	location: Location;
 	filter: null;
-	services: Service[];
+	services: Service[] | null;
 }
 
 export interface Location {

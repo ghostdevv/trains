@@ -11,7 +11,7 @@ const { services, location } = Astro.props.times;
 ---
 
 <h1>{location.name}</h1>
-<p>{services.length} services</p>
+<p>{services?.length ?? 0} services</p>
 
 <section>
 	<table>
@@ -26,7 +26,7 @@ const { services, location } = Astro.props.times;
 			<th>RR</th>
 		</tr>
 
-		{services.map((service) => <Service {service} />)}
+		{services?.map((service) => <Service {service} />)}
 	</table>
 
 	<details>

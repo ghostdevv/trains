@@ -2,19 +2,20 @@
 import type { LiveTimes } from '$lib/types/liveTimes.d.ts';
 import TimeTable from '$lib/time-table/TimeTable.astro';
 import Global from '$layouts/Global.astro';
-// import Search from '$lib/Search.svelte';
+import { ofetch } from 'ofetch';
 
-const response = await fetch(
+const data = await ofetch<LiveTimes>(
 	`https://api.rtt.io/api/v1/json/search/${Astro.params.crs}`,
 	{ headers: { Authorization: import.meta.env.RTT_AUTH } },
-);
+).catch(() => null);
 
-console.log(response.url);
-
-const data: LiveTimes = await response.json();
+if (!data || !data.location) {
+	return Astro.redirect(
+		`/?error=${data.status == 404 ? 'rtt-station-not-found' : 'unhandled'}`,
+	);
+}
 ---
 
 <Global>
-	<!-- <Search client:load /> -->
 	<TimeTable times={data} />
 </Global>
