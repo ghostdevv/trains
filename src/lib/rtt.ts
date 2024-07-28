@@ -40,12 +40,14 @@ export async function fetchClasses(rttLink: string): Promise<number[]> {
 				typeof classNumber == 'number' && !isNaN(classNumber),
 		);
 
-	await db.insert(ClassCache).values(
-		classes.map((class_number) => ({
-			rtt_url: rttLink,
-			class_number,
-		})),
-	);
+	if (classes.length > 0) {
+		await db.insert(ClassCache).values(
+			classes.map((class_number) => ({
+				rtt_url: rttLink,
+				class_number,
+			})),
+		);
+	}
 
 	return classes;
 }
