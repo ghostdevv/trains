@@ -1,5 +1,6 @@
 {
-  "name": "",
+  "name": "live-train-times",
+  "private": true,
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -10,6 +11,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^11.0.1",
     "@astrojs/svelte": "^5.7.0",
     "astro": "^4.12.2",
     "ghostsui": "^1.6.0",
