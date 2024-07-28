@@ -6,7 +6,12 @@ import Global from '$layouts/Global.astro';
 	<div class="wrapper">
 		<form action="/search">
 			<label>
-				<input type="text" name="q" placeholder="Station Code" />
+				<input
+					type="text"
+					name="q"
+					placeholder="Station Code"
+					required
+				/>
 			</label>
 
 			<button>Search</button>
