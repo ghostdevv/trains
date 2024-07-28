@@ -11,7 +11,7 @@ const data = await ofetch<LiveTimes>(
 
 if (!data || !data.location) {
 	return Astro.redirect(
-		`/?error=${data.status == 404 ? 'rtt-station-not-found' : 'unhandled'}`,
+		`/?error=${data?.status == 404 ? 'rtt-station-not-found' : 'unhandled'}`,
 	);
 }
 ---
