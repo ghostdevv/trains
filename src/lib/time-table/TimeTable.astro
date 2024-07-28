@@ -1,6 +1,6 @@
 ---
 import type { LiveTimes } from '$lib/types/liveTimes.d';
-import { Code } from 'astro:components';
+// import { Code } from 'astro:components';
 import Service from './Service.astro';
 
 interface Props {
@@ -32,11 +32,12 @@ const { services, location } = Astro.props.times;
 	<details>
 		<summary>view raw</summary>
 
-		<Code
+		<pre><code>{JSON.stringify(Astro.props.times, null, 2)}</code></pre>
+		<!-- <Code
 			code={JSON.stringify(Astro.props.times, null, 2)}
 			lang="json"
 			theme="vitesse-dark"
-		/>
+		/> -->
 	</details>
 </section>
 
