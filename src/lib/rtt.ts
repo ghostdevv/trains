@@ -10,7 +10,11 @@ const $fetch = ofetch.create({
 
 export async function rtt<T>(path: string) {
 	return $fetch<T>(path).catch((error) => {
-		console.error('rtt auth', import.meta.env.RTT_AUTH);
+		console.error(
+			'rtt auth',
+			import.meta.env.SSR,
+			import.meta.env.RTT_AUTH,
+		);
 		console.error('rtt fetch error', error);
 		return null;
 	});
