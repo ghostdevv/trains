@@ -13,7 +13,7 @@ export default defineConfig({
 	output: 'server',
 	vite: {
 		define: {
-			__TEST__: `"${RTT_AUTH}"`,
+			__RTT_AUTH__: `"${RTT_AUTH}"`,
 		},
 	},
 });
