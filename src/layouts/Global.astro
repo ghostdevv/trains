@@ -1,16 +1,21 @@
 ---
-import 'ghostsui'
+import { getErrorMessage } from '$lib/errors';
+import 'ghostsui';
+
+const error = getErrorMessage(Astro.url.searchParams.get('error'));
 ---
 
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" href="/favicon.png">
+		<link rel="icon" href="/favicon.png" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Live Train Times</title>
 	</head>
 	<body>
+		{error && <div class="error-banner">{error}</div>}
+
 		<main>
 			<slot />
 		</main>
@@ -20,5 +25,15 @@ import 'ghostsui'
 <style lang="scss">
 	main {
 		padding: 32px;
+	}
+
+	.error-banner {
+		position: fixed;
+		top: 0;
+		left: 50%;
+		transform: translateX(-50%);
+
+		padding: 22px;
+		color: var(--red);
 	}
 </style>
