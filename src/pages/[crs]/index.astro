@@ -14,7 +14,10 @@ if (crs?.length != 3 || !stations.some((s) => s.crs == crs)) {
 const data = await ofetch<LiveTimes>(
 	`https://api.rtt.io/api/v1/json/search/${crs}`,
 	{ headers: { Authorization: import.meta.env.RTT_AUTH } },
-).catch(() => null);
+).catch((e) => {
+	console.error('rrt error', e);
+	return null;
+});
 
 if (!data || !data.location) {
 	return Astro.redirect(
