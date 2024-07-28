@@ -1,0 +1,20 @@
+---
+import type { LiveTimes } from '$lib/types/liveTimes.d.ts';
+import TimeTable from '$lib/time-table/TimeTable.astro';
+import Global from '$layouts/Global.astro';
+// import Search from '$lib/Search.svelte';
+
+const response = await fetch(
+	`https://api.rtt.io/api/v1/json/search/${Astro.params.crs}`,
+	{ headers: { Authorization: import.meta.env.RTT_AUTH } },
+);
+
+console.log(response.url);
+
+const data: LiveTimes = await response.json();
+---
+
+<Global>
+	<!-- <Search client:load /> -->
+	<TimeTable times={data} />
+</Global>

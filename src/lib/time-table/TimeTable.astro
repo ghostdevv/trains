@@ -1,0 +1,53 @@
+---
+import type { LiveTimes } from '$lib/types/liveTimes.d';
+import { Code } from 'astro:components';
+import Service from './Service.astro';
+
+interface Props {
+	times: LiveTimes;
+}
+
+const { services, location } = Astro.props.times;
+---
+
+<h1>{location.name}</h1>
+<p>{services.length} services</p>
+
+<section>
+	<table>
+		<tr>
+			<th>Depature Time</th>
+			<th>From</th>
+			<th>To</th>
+			<th>TOC</th>
+			<th>UID</th>
+			<th>Class</th>
+			<th>RTT</th>
+			<th>RR</th>
+		</tr>
+
+		{services.map((service) => <Service {service} />)}
+	</table>
+
+	<details>
+		<summary>view raw</summary>
+
+		<Code
+			code={JSON.stringify(Astro.props.times, null, 2)}
+			lang="json"
+			theme="vitesse-dark"
+		/>
+	</details>
+</section>
+
+<style lang="scss">
+	th {
+		background-color: #1e1e1f;
+		position: sticky;
+		top: 0;
+	}
+
+	details {
+		margin-top: 8px;
+	}
+</style>
