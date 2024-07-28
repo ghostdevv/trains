@@ -10,10 +10,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/svelte": "^4.0.2",
-    "astro": "^3.1.1",
+    "@astrojs/svelte": "^5.7.0",
+    "astro": "^4.12.2",
     "ghostsui": "^1.6.0",
-    "sass": "^1.67.0",
-    "svelte": "^4.0.0"
+    "sass": "^1.77.8",
+    "svelte": "^4.2.18"
   }
 }
