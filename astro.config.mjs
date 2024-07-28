@@ -8,4 +8,9 @@ export default defineConfig({
 	integrations: [svelte(), db()],
 	adapter: cloudflare(),
 	output: 'server',
+	vite: {
+		define: {
+			'import.meta.env.RTT_AUTH': JSON.stringify(process.env.RTT_AUTH),
+		},
+	},
 });
