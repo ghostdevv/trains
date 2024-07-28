@@ -1,16 +1,20 @@
 import { db, eq, ClassCache } from 'astro:db';
 import { ofetch } from 'ofetch';
 
+declare global {
+	const __TEST__: string;
+}
+
 const $fetch = ofetch.create({
 	baseURL: 'https://api.rtt.io/api/v1/json',
 	headers: {
-		Authorization: process.env.RTT_AUTH,
+		Authorization: __TEST__,
 	},
 });
 
 export async function rtt<T>(path: string) {
 	return $fetch<T>(path).catch((error) => {
-		console.error('rtt auth', import.meta.env.SSR, process.env.RTT_AUTH);
+		console.error('rtt auth', import.meta.env.SSR, __TEST__);
 		console.error('rtt fetch error', error);
 		return null;
 	});
