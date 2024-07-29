@@ -39,6 +39,11 @@ export async function fetchClasses(rttLink: string): Promise<number[] | null> {
 			.filter(
 				(classNumber): classNumber is number =>
 					typeof classNumber == 'number' && !isNaN(classNumber),
+			)
+			.reduce<number[]>(
+				(classes, current) =>
+					classes.includes(current) ? classes : [...classes, current],
+				[],
 			);
 
 		if (classes.length > 0) {
@@ -52,7 +57,7 @@ export async function fetchClasses(rttLink: string): Promise<number[] | null> {
 
 		return classes;
 	} catch (error) {
-		console.error('failed to fetch classes', error);
+		console.error('failed to fetch classes', rttLink, error);
 		return null;
 	}
 }
