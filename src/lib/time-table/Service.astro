@@ -10,6 +10,7 @@ const { service } = Astro.props;
 
 const rttLink = `https://www.realtimetrains.co.uk/service/gb-nr:${service.serviceUid}/${service.runDate}/detailed`;
 const rrLink = `https://live.rail-record.co.uk/train.php/?c=${service.serviceUid}&d=${service.runDate}`;
+const ottLink = `https://www.opentraintimes.com/schedule/${service.serviceUid}/${service.runDate}`;
 
 const classes = await fetchClasses(service.serviceUid, service.runDate);
 ---
@@ -21,6 +22,9 @@ const classes = await fetchClasses(service.serviceUid, service.runDate);
 	<td>{service.atocCode}</td>
 	<td>{service.serviceUid}</td>
 	<td>{classes ? classes.join(', ') : 'failed'}</td>
-	<td><a target="_blank" href={rttLink}> RTT </a></td>
-	<td><a target="_blank" href={rrLink}> RR </a></td>
+	<td>
+		<a target="_blank" href={rttLink}> RTT </a>
+		<a target="_blank" href={rrLink}> RR </a>
+		<a target="_blank" href={ottLink}> OTT </a>
+	</td>
 </tr>
