@@ -34,28 +34,26 @@ export async function fetchClasses(rttLink: string): Promise<number[] | null> {
 		const data = await ofetch(rttLink, { responseType: 'text' });
 		const matches = data.matchAll(/<span class="identity">(\d+)<\/span>/g);
 
-		const classes = Array.from(matches)
-			.flatMap(([, classNumber]) => classNumber && parseInt(classNumber))
-			.filter(
-				(classNumber): classNumber is number =>
-					typeof classNumber == 'number' && !isNaN(classNumber),
-			)
-			.reduce<number[]>(
-				(classes, current) =>
-					classes.includes(current) ? classes : [...classes, current],
-				[],
-			);
+		const classes = new Set<number>();
 
-		if (classes.length > 0) {
+		for (const match of matches) {
+			const classNumber = parseInt(`${match[1]}`);
+
+			if (typeof classNumber == 'number' && !Number.isNaN(classNumber)) {
+				classes.add(classNumber);
+			}
+		}
+
+		if (classes.size > 0) {
 			await db.insert(ClassCache).values(
-				classes.map((class_number) => ({
+				Array.from(classes).map((class_number) => ({
 					rtt_url: rttLink,
 					class_number,
 				})),
 			);
 		}
 
-		return classes;
+		return Array.from(classes);
 	} catch (error) {
 		console.error('failed to fetch classes', rttLink, error);
 		return null;
