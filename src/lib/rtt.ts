@@ -20,18 +20,27 @@ export async function rtt<T>(path: string) {
 	});
 }
 
-export async function fetchClasses(rttLink: string): Promise<number[] | null> {
+export async function fetchClasses(
+	uid: string,
+	date: string,
+): Promise<number[] | null> {
 	try {
+		const lookup = `${uid}:${date}`;
+
 		const saved = await db
 			.select()
 			.from(ClassCache)
-			.where(eq(ClassCache.rtt_url, rttLink));
+			.where(eq(ClassCache.lookup, lookup));
 
 		if (saved.length) {
 			return saved.map((record) => record.class_number);
 		}
 
-		const data = await ofetch(rttLink, { responseType: 'text' });
+		const data = await ofetch(
+			`https://www.realtimetrains.co.uk/service/gb-nr:${uid}/${date}/detailed`,
+			{ responseType: 'text' },
+		);
+
 		const matches = data.matchAll(/<span class="identity">(\d+)<\/span>/g);
 
 		const classes = new Set<number>();
@@ -47,15 +56,15 @@ export async function fetchClasses(rttLink: string): Promise<number[] | null> {
 		if (classes.size > 0) {
 			await db.insert(ClassCache).values(
 				Array.from(classes).map((class_number) => ({
-					rtt_url: rttLink,
 					class_number,
+					lookup,
 				})),
 			);
 		}
 
 		return Array.from(classes);
 	} catch (error) {
-		console.error('failed to fetch classes', rttLink, error);
+		console.error('failed to fetch classes', uid, date, error);
 		return null;
 	}
 }
