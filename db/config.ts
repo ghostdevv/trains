@@ -1,5 +1,14 @@
 import { defineDb, defineTable, column } from 'astro:db';
 
+const Service = defineTable({
+	columns: {
+		id: column.number({ primaryKey: true }),
+		service_uid: column.text(),
+		run_date: column.date(),
+		location_crs: column.text(),
+	},
+});
+
 const ClassCache = defineTable({
 	columns: {
 		id: column.number({ primaryKey: true }),
