@@ -86,7 +86,7 @@ export async function fetchClasses(
 		if (classes.size > 0) {
 			for (const classNumber of classes) {
 				await CACHE.put(
-					`${lookupPrefix}:${classNumber}`,
+					`${lookupPrefix}:${crypto.randomUUID()}`,
 					JSON.stringify({ classNumber } satisfies CacheResult),
 					{ expirationTtl: 604800 },
 				);
