@@ -1,3 +1,4 @@
+import type { KVNamespace } from '@cloudflare/workers-types';
 import { ofetch } from 'ofetch';
 
 declare global {
@@ -19,21 +20,55 @@ export async function rtt<T>(path: string) {
 	});
 }
 
+interface CacheResult {
+	classNumber: number;
+}
+
+async function checkCache(CACHE: KVNamespace, prefix: string) {
+	const keys: string[] = [];
+	let cursor: string = '';
+
+	while (true) {
+		const results = await CACHE.list({
+			prefix,
+			cursor,
+		});
+
+		keys.push(...results.keys.map((key) => key.name));
+
+		if (results.list_complete) {
+			break;
+		}
+
+		cursor = results.cursor;
+	}
+
+	const results: CacheResult[] = [];
+
+	for (const key of keys) {
+		console.log({ key });
+		const result = await CACHE.get<CacheResult>(key, 'json');
+
+		if (result) {
+			results.push(result);
+		}
+	}
+
+	return results;
+}
+
 export async function fetchClasses(
 	uid: string,
 	date: string,
+	CACHE: KVNamespace,
 ): Promise<number[] | null> {
 	try {
-		const lookup = `${uid}:${date}`;
+		const lookupPrefix = `${uid}-${date}`;
+		const saved = await checkCache(CACHE, lookupPrefix);
 
-		// const saved = await db
-		// 	.select()
-		// 	.from(ClassCache)
-		// 	.where(eq(ClassCache.lookup, lookup));
-
-		// if (saved.length) {
-		// 	return saved.map((record) => record.class_number);
-		// }
+		if (saved.length) {
+			return saved.map((result) => result.classNumber);
+		}
 
 		const data = await ofetch(
 			`https://www.realtimetrains.co.uk/service/gb-nr:${uid}/${date}/detailed`,
@@ -53,12 +88,13 @@ export async function fetchClasses(
 		}
 
 		if (classes.size > 0) {
-			await db.insert(ClassCache).values(
-				Array.from(classes).map((class_number) => ({
-					class_number,
-					lookup,
-				})),
-			);
+			for (const classNumber of classes) {
+				await CACHE.put(
+					`${lookupPrefix}:${classNumber}`,
+					JSON.stringify({ classNumber } satisfies CacheResult),
+					{ expirationTtl: 604800 },
+				);
+			}
 		}
 
 		return Array.from(classes);

@@ -1,0 +1,7 @@
+name = "live-train-times"
+account_id = "44321e1b7fbd29b56b65c1890a3bbee2"
+compatibility_date = "2025-03-04"
+
+[[kv_namespaces]]
+binding = "CACHE"
+id = "75f60ecca7d94dcdb6458dbbcf6b0b2b"

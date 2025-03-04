@@ -8,7 +8,7 @@ const { RTT_AUTH } = loadEnv(process.env.NODE_ENV, process.cwd(), '');
 // https://astro.build/config
 export default defineConfig({
 	integrations: [svelte()],
-	adapter: cloudflare(),
+	adapter: cloudflare({ platformProxy: { enabled: true } }),
 	output: 'server',
 	vite: {
 		define: {

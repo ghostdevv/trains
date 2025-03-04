@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build --remote",
+    "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -20,5 +20,8 @@
     "sass": "^1.85.1",
     "svelte": "^5.22.1",
     "vite": "^6.2.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250303.0"
   }
 }
