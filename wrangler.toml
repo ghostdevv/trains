@@ -1,5 +1,4 @@
 name = "live-train-times"
-account_id = "44321e1b7fbd29b56b65c1890a3bbee2"
 compatibility_date = "2025-03-04"
 
 pages_build_output_dir = "dist"
