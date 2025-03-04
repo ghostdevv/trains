@@ -1,4 +1,3 @@
-import { db, eq, ClassCache } from 'astro:db';
 import { ofetch } from 'ofetch';
 
 declare global {
@@ -27,14 +26,14 @@ export async function fetchClasses(
 	try {
 		const lookup = `${uid}:${date}`;
 
-		const saved = await db
-			.select()
-			.from(ClassCache)
-			.where(eq(ClassCache.lookup, lookup));
+		// const saved = await db
+		// 	.select()
+		// 	.from(ClassCache)
+		// 	.where(eq(ClassCache.lookup, lookup));
 
-		if (saved.length) {
-			return saved.map((record) => record.class_number);
-		}
+		// if (saved.length) {
+		// 	return saved.map((record) => record.class_number);
+		// }
 
 		const data = await ofetch(
 			`https://www.realtimetrains.co.uk/service/gb-nr:${uid}/${date}/detailed`,
