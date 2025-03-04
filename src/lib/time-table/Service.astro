@@ -12,8 +12,6 @@ const rttLink = `https://www.realtimetrains.co.uk/service/gb-nr:${service.servic
 const rrLink = `https://live.rail-record.co.uk/train.php/?c=${service.serviceUid}&d=${service.runDate}`;
 const ottLink = `https://www.opentraintimes.com/schedule/${service.serviceUid}/${service.runDate}`;
 
-console.log(Astro.locals);
-
 const classes = await fetchClasses(
 	service.serviceUid,
 	service.runDate,

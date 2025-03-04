@@ -43,7 +43,6 @@ async function checkCache(CACHE: KVNamespace, prefix: string) {
 	const results: CacheResult[] = [];
 
 	for (const key of keys) {
-		console.log({ key });
 		const result = await CACHE.get<CacheResult>(key, 'json');
 
 		if (result) {
