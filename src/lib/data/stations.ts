@@ -18,3 +18,12 @@ export function findStation(query: string): StationData | null {
 
 	return station || null;
 }
+
+export function findByCRS(crs: string): StationData | null {
+	if (crs.length !== 3) {
+		return null;
+	}
+
+	const station = stations.find((s) => s.crs == crs);
+	return station || null;
+}
