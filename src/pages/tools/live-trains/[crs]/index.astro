@@ -8,7 +8,7 @@ import { rtt } from '$lib/rtt';
 const station = getStation(Astro.params.crs!);
 
 if (!station) {
-   	return Astro.redirect('/tools/live-trains?error=station-not-found');
+   	return Astro.redirect('/tools/live-trains?error=crs-not-found');
 }
 
 const data = await rtt<LiveTimes>(`/search/${station.crs}`);
