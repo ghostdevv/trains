@@ -1,4 +1,4 @@
-name = "live-train-times"
+name = "trains"
 compatibility_date = "2025-03-04"
 
 pages_build_output_dir = "dist"
