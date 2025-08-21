@@ -1,5 +1,6 @@
 export const ERRORS = Object.freeze({
-	'search-missing-station': 'Unable to find a station matching that search query',
+	'search-missing-station':
+		'Unable to find a station matching that search query',
 	'rtt-station-not-found': 'No station matching this CRS was found on RTT',
 	'crs-not-found': 'No station matching this CRS was found',
 	unhandled: 'Unhandled error',

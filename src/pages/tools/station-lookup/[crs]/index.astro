@@ -5,37 +5,37 @@ import Global from '$layouts/Global.astro';
 const station = getStation(Astro.params.crs!);
 
 if (!station) {
-   	return Astro.redirect('/tools/live-trains?error=crs-not-found');
+	return Astro.redirect('/tools/live-trains?error=crs-not-found');
 }
 ---
 
 <Global>
-    <section>
-        <h6>Station Lookup</h6>
-        <h1 class="name">{station.name}</h1>
-    </section>
+	<section>
+		<h6>Station Lookup</h6>
+		<h1 class="name">{station.name}</h1>
+	</section>
 
-    <section>
-        <table>
-            <thead>
-                <tr>
-                    <th>CRS</th>
-                    <th>TIPLOC</th>
-                </tr>
-            </thead>
+	<section>
+		<table>
+			<thead>
+				<tr>
+					<th>CRS</th>
+					<th>TIPLOC</th>
+				</tr>
+			</thead>
 
-            <tbody>
-                <tr>
-                    <td>{station.crs}</td>
-                    <td>{station.tiploc}</td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
+			<tbody>
+				<tr>
+					<td>{station.crs}</td>
+					<td>{station.tiploc}</td>
+				</tr>
+			</tbody>
+		</table>
+	</section>
 </Global>
 
 <style>
-    .name {
-        text-transform: capitalize;
-    }
+	.name {
+		text-transform: capitalize;
+	}
 </style>

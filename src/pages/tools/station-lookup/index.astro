@@ -6,17 +6,21 @@ import { actions } from 'astro:actions';
 const result = Astro.getActionResult(actions.stationSearch);
 
 if (result) {
-    if (result.error || !result.data) {
-        return Astro.redirect(`?error=${result.error || 'search-missing-station'}`)
-    }
+	if (result.error || !result.data) {
+		return Astro.redirect(
+			`?error=${result.error || 'search-missing-station'}`,
+		);
+	}
 
-    if (!Array.isArray(result.data.matches)) {
-        return Astro.redirect(`/tools/station-lookup/${result.data.matches.crs}`)
-    }
+	if (!Array.isArray(result.data.matches)) {
+		return Astro.redirect(
+			`/tools/station-lookup/${result.data.matches.crs}`,
+		);
+	}
 }
 ---
 
 <Global>
-    <h3>Station Lookup</h3>
-    <StationSearch />
+	<h3>Station Lookup</h3>
+	<StationSearch />
 </Global>

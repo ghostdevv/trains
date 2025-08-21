@@ -16,7 +16,9 @@ export const server = {
 			query: z.string().min(1).max(128).trim().toLowerCase(),
 		}),
 		async handler({ query }): Promise<Result> {
-			const codeMatch = stations.find((s) => s.crs === query || s.tiploc === query);
+			const codeMatch = stations.find(
+				(s) => s.crs === query || s.tiploc === query,
+			);
 			if (codeMatch) return { query, matches: codeMatch as StationData };
 
 			const fuse = new Fuse<StationData>(stations, {
