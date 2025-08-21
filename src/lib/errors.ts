@@ -17,6 +17,7 @@ function isErrorKey(key: unknown): key is ErrorKey {
 	);
 }
 
-export function getErrorMessage(key: (string & {}) | ErrorKey) {
+export function getErrorMessage(key: (string & {}) | ErrorKey | null) {
+	if (!key) return null;
 	return isErrorKey(key) ? ERRORS[key] : ERRORS.unknown;
 }
