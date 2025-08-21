@@ -1,17 +1,13 @@
 ---
-interface Props {
-    endpoint: string
-}
-
-const { endpoint }  = Astro.props;
+import { actions } from 'astro:actions';
 ---
 
-<form action={endpoint}>
+<form action={actions.stationSearch} method="POST">
 	<label>
 	    <span class="sr-only">Station Name/CRS/TIPLOC</span>
 		<input
 			type="search"
-			name="q"
+			name="query"
 			placeholder="CRS, Station Name, TIPLOC..."
 			required
 		/>

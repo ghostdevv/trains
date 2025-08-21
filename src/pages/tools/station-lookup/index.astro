@@ -1,9 +1,20 @@
 ---
 import StationSearch from '$lib/forms/StationSearch.astro';
 import Global from '$layouts/Global.astro';
+import { actions } from 'astro:actions';
+
+const result = Astro.getActionResult(actions.stationSearch);
+
+if (result) {
+    if (result.error || !result.data) {
+        return Astro.redirect(`?error=${result.error || 'search-missing-station'}`)
+    }
+
+    return Astro.redirect(`/tools/station-lookup/${result.data.crs}`)
+}
 ---
 
 <Global>
     <h3>Station Lookup</h3>
-    <StationSearch endpoint="/tools/station-lookup/search" />
+    <StationSearch />
 </Global>
