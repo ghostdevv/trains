@@ -11,18 +11,13 @@ const $fetch = ofetch.create({
 
 export async function rtt<T>(path: string) {
 	return $fetch<T>(path).catch((error) => {
-		console.error('rtt auth', import.meta.env.SSR, RTT_AUTH);
 		console.error('rtt fetch error', error);
 		return null;
 	});
 }
 
-interface CacheResult {
-	classNumber: number;
-}
-
 async function checkCache(CACHE: KVNamespace, prefix: string) {
-	const keys: string[] = [];
+	const classes = new Set<number>();
 	let cursor = '';
 
 	while (true) {
@@ -31,7 +26,13 @@ async function checkCache(CACHE: KVNamespace, prefix: string) {
 			cursor,
 		});
 
-		keys.push(...results.keys.map((key) => key.name));
+		for (const { name } of results.keys) {
+			const numbered = Number.parseInt(name, 10);
+
+			if (!Number.isNaN(numbered)) {
+				classes.add(numbered);
+			}
+		}
 
 		if (results.list_complete) {
 			break;
@@ -40,17 +41,7 @@ async function checkCache(CACHE: KVNamespace, prefix: string) {
 		cursor = results.cursor;
 	}
 
-	const results: CacheResult[] = [];
-
-	for (const key of keys) {
-		const result = await CACHE.get<CacheResult>(key, 'json');
-
-		if (result) {
-			results.push(result);
-		}
-	}
-
-	return results;
+	return Array.from(classes);
 }
 
 export async function fetchClasses(
@@ -60,11 +51,9 @@ export async function fetchClasses(
 ): Promise<number[] | null> {
 	try {
 		const lookupPrefix = `${uid}-${date}`;
-		const saved = await checkCache(CACHE, lookupPrefix);
 
-		if (saved.length) {
-			return saved.map((result) => result.classNumber);
-		}
+		const saved = await checkCache(CACHE, lookupPrefix);
+		if (saved.length) return saved;
 
 		const data = await ofetch(
 			`https://www.realtimetrains.co.uk/service/gb-nr:${uid}/${date}/detailed`,
@@ -85,11 +74,9 @@ export async function fetchClasses(
 
 		if (classes.size > 0) {
 			for (const classNumber of classes) {
-				await CACHE.put(
-					`${lookupPrefix}:${crypto.randomUUID()}`,
-					JSON.stringify({ classNumber } satisfies CacheResult),
-					{ expirationTtl: 604800 },
-				);
+				await CACHE.put(`${lookupPrefix}:${classNumber}`, '', {
+					expirationTtl: 604800,
+				});
 			}
 		}
 
