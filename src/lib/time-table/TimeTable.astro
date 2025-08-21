@@ -7,11 +7,8 @@ interface Props {
 	times: LiveTimes;
 }
 
-const { services, location } = Astro.props.times;
+const { services } = Astro.props.times;
 ---
-
-<h1>{location.name}</h1>
-<p>{services?.length ?? 0} services</p>
 
 <section>
 	<table>
@@ -27,7 +24,9 @@ const { services, location } = Astro.props.times;
 
 		{services?.map((service) => <Service {service} />)}
 	</table>
+</section>
 
+<section>
 	<details>
 		<summary>view raw</summary>
 
@@ -45,9 +44,5 @@ const { services, location } = Astro.props.times;
 		background-color: #1e1e1f;
 		position: sticky;
 		top: 0;
-	}
-
-	details {
-		margin-top: 8px;
 	}
 </style>

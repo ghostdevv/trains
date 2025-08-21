@@ -21,5 +21,11 @@ if (!data || !data.location) {
 ---
 
 <Global>
+	<section>
+		<h6>Live Train Times</h6>
+		<h1>{data.location.name}</h1>
+		<p>{data.services?.length ?? 0} services</p>
+	</section>
+
 	<TimeTable times={data} />
 </Global>
