@@ -18,5 +18,10 @@ export const GET: APIRoute = async ({ url, redirect }) => {
 	if (!query) return redirect('/');
 
 	const crs = find(query);
-	return redirect(crs ? `/${crs}` : '/?error=search-missing-station');
+
+	return redirect(
+		crs
+			? `/tools/live-trains/${crs}`
+			: '/tools/live-trains?error=search-missing-station',
+	);
 };

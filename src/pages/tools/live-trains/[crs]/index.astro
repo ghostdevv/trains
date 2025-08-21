@@ -8,14 +8,14 @@ import { rtt } from '$lib/rtt';
 const crs = Astro.params.crs;
 
 if (crs?.length != 3 || !stations.some((s) => s.crs == crs)) {
-	return Astro.redirect('/?error=rtt-station-not-found');
+	return Astro.redirect('/tools/live-trains?error=rtt-station-not-found');
 }
 
 const data = await rtt<LiveTimes>(`/search/${crs}`);
 
 if (!data || !data.location) {
 	return Astro.redirect(
-		`/?error=${data?.status == 404 ? 'rtt-station-not-found' : 'unhandled'}`,
+		`/tools/live-trains?error=${data?.status == 404 ? 'rtt-station-not-found' : 'unhandled'}`,
 	);
 }
 ---
