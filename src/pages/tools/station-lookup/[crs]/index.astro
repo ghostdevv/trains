@@ -15,7 +15,7 @@ if (!station) {
 		<h6>Station Lookup</h6>
 
 		<div class="name-area">
-			<h1 class="name">{station.name}</h1>
+			<h1 class="name">{station.name} ({station.crs.toUpperCase()})</h1>
 
 			<a
 				href={`/tools/live-trains/${station.crs}`}
