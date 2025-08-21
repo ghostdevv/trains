@@ -1,0 +1,24 @@
+---
+import { getCollection, render } from 'astro:content';
+import Global from '$layouts/Global.astro';
+
+export async function getStaticPaths() {
+	const collection = await getCollection('wiki');
+
+	return collection.map((page) => ({
+		params: { id: page.id },
+		props: { page },
+	}));
+}
+
+export const prerender = true;
+
+const { page } = Astro.props;
+const { id } = Astro.params;
+
+const { Content } = await render(page);
+---
+
+<Global>
+	<Content />
+</Global>

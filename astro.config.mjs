@@ -7,6 +7,9 @@ export default defineConfig({
 	integrations: [svelte()],
 	adapter: cloudflare({ platformProxy: { enabled: true } }),
 	output: 'server',
+	redirects: {
+		'/': '/wiki',
+	},
 	env: {
 		validateSecrets: true,
 		schema: {
