@@ -1,40 +1,8 @@
 ---
+import StationSearch from '$lib/forms/StationSearch.astro';
 import Global from '$layouts/Global.astro';
 ---
 
 <Global>
-	<div class="wrapper">
-		<form action="/tools/live-trains/search">
-			<label>
-				<input
-					type="text"
-					name="q"
-					placeholder="CRS, Station Name, TIPLOC..."
-					required
-				/>
-			</label>
-
-			<button>Search</button>
-		</form>
-	</div>
+    <StationSearch endpoint="/tools/live-trains/search" />
 </Global>
-
-<style lang="scss">
-	.wrapper {
-		width: 100%;
-		min-height: 100dvh;
-		max-width: 800px;
-		margin: 25dvh auto;
-	}
-
-	form {
-		display: flex;
-		flex-flow: row nowrap;
-		align-items: center;
-		justify-content: center;
-
-		label {
-			flex-grow: 1;
-		}
-	}
-</style>

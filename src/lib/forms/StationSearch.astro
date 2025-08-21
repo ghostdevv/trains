@@ -1,0 +1,33 @@
+---
+interface Props {
+    endpoint: string
+}
+
+const { endpoint }  = Astro.props;
+---
+
+<form action={endpoint}>
+	<label>
+		<input
+			type="text"
+			name="q"
+			placeholder="CRS, Station Name, TIPLOC..."
+			required
+		/>
+	</label>
+
+	<button>Search</button>
+</form>
+
+<style lang="scss">
+	form {
+		display: flex;
+		flex-flow: row nowrap;
+		align-items: center;
+		justify-content: center;
+
+		label {
+			flex-grow: 1;
+		}
+	}
+</style>
