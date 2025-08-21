@@ -1,11 +1,11 @@
 ---
 import type { LiveTimes } from '$lib/types/liveTimes.d.ts';
 import TimeTable from '$lib/time-table/TimeTable.astro';
-import { findByCRS } from '$lib/data/stations';
+import { getStation } from '$lib/data/stations';
 import Global from '$layouts/Global.astro';
 import { rtt } from '$lib/rtt';
 
-const station = findByCRS(Astro.params.crs!);
+const station = getStation(Astro.params.crs!);
 
 if (!station) {
    	return Astro.redirect('/tools/live-trains?error=station-not-found');

@@ -18,6 +18,7 @@
     "@biomejs/biome": "2.2.0",
     "@cloudflare/workers-types": "^4.20250821.0",
     "astro": "^5.13.2",
+    "fuse.js": "^7.1.0",
     "ghostsui": "2.0.0-beta.4",
     "ofetch": "^1.4.1",
     "sass": "^1.90.0",

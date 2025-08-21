@@ -1,5 +1,7 @@
 ---
 import { actions } from 'astro:actions';
+
+const result = Astro.getActionResult(actions.stationSearch);
 ---
 
 <form action={actions.stationSearch} method="POST">
@@ -8,11 +10,20 @@ import { actions } from 'astro:actions';
 		<input
 			type="search"
 			name="query"
+			value={result?.data?.query || ''}
 			placeholder="CRS, Station Name, TIPLOC..."
 			required
 		/>
 	</label>
 </form>
+
+{Array.isArray(result?.data?.matches) && <section>
+    <h4>Results:</h4>
+
+    <ul>
+        {result.data.matches.map((match) => <li><a href={`${Astro.url.pathname}/${match.item.crs}`}>{match.item.name}</a></li>)}
+    </ul>
+</section>}
 
 <style lang="scss">
 	form {
@@ -24,5 +35,13 @@ import { actions } from 'astro:actions';
 		label {
 			flex-grow: 1;
 		}
+	}
+
+	ul {
+    	margin: 12px 0px;
+
+    	li {
+            text-transform: capitalize;
+    	}
 	}
 </style>

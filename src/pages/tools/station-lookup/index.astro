@@ -10,7 +10,9 @@ if (result) {
         return Astro.redirect(`?error=${result.error || 'search-missing-station'}`)
     }
 
-    return Astro.redirect(`/tools/station-lookup/${result.data.crs}`)
+    if (!Array.isArray(result.data.matches)) {
+        return Astro.redirect(`/tools/station-lookup/${result.data.matches.crs}`)
+    }
 }
 ---
 
