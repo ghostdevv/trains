@@ -8,6 +8,7 @@ const { endpoint }  = Astro.props;
 
 <form action={endpoint}>
 	<label>
+	    <span class="sr-only">Station Name/CRS/TIPLOC</span>
 		<input
 			type="text"
 			name="q"
