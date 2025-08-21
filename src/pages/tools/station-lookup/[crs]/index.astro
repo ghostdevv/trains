@@ -1,0 +1,41 @@
+---
+import { findByCRS } from '$lib/data/stations';
+import Global from '$layouts/Global.astro';
+
+const station = findByCRS(Astro.params.crs!);
+
+if (!station) {
+   	return Astro.redirect('/tools/live-trains?error=rtt-station-not-found');
+}
+---
+
+<Global>
+    <section>
+        <h6>Station Lookup</h6>
+        <h1 class="name">{station.name}</h1>
+    </section>
+
+    <section>
+        <table>
+            <thead>
+                <tr>
+                    <th>CRS</th>
+                    <th>TIPLOC</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td><code>{station.crs}</code></td>
+                    <td><code>{station.tiploc}</code></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</Global>
+
+<style>
+    .name {
+        text-transform: capitalize;
+    }
+</style>
