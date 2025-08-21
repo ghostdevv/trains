@@ -1,7 +1,18 @@
 name = "trains"
-compatibility_date = "2025-03-04"
+compatibility_date = "2025-08-21"
 
-pages_build_output_dir = "dist"
+main = "./dist/_worker.js/index.js"
+
+[assets]
+binding = "ASSETS"
+directory = "./dist"
+
+[[routes]]
+custom_domain = true
+pattern = "trains.willow.sh"
+
+[observability]
+enabled = true
 
 [[kv_namespaces]]
 binding = "CACHE"
