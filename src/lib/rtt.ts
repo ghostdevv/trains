@@ -1,4 +1,5 @@
 import type { KVNamespace } from '@cloudflare/workers-types';
+import { USER_AGENT } from './utils/user-agent';
 import { RTT_AUTH } from 'astro:env/server';
 import { ofetch } from 'ofetch';
 
@@ -6,6 +7,7 @@ const $fetch = ofetch.create({
 	baseURL: 'https://api.rtt.io/api/v1/json',
 	headers: {
 		Authorization: RTT_AUTH,
+		'User-Agent': USER_AGENT,
 	},
 });
 
