@@ -24,6 +24,14 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250303.0"
   },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "esbuild",
+      "sharp",
+      "workerd"
+    ]
+  },
   "packageManager": "pnpm@10.15.0",
   "volta": {
     "node": "22.18.0",
