@@ -32,6 +32,9 @@ importers:
       ghostsui:
         specifier: 2.0.0-beta.4
         version: 2.0.0-beta.4
+      obra-icons-svelte:
+        specifier: ^1.23.1
+        version: 1.23.1(svelte@5.38.2)
       ofetch:
         specifier: ^1.4.1
         version: 1.4.1
@@ -1705,6 +1708,11 @@ packages:
   normalize-path@3.0.0:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
     engines: {node: '>=0.10.0'}
+
+  obra-icons-svelte@1.23.1:
+    resolution: {integrity: sha512-9qmfgy4RXi6BzUfyJ7VofUfiY2Pd1cfh4MvzFQpNZ4eGDZlI+/OSQwpdKHwMO4GsY9ZE9vd6N9Tm//9mkaKbeQ==}
+    peerDependencies:
+      svelte: ^3.55.0 || ^4.0.0 || ^5.0.0
 
   ofetch@1.4.1:
     resolution: {integrity: sha512-QZj2DfGplQAr2oj9KzceK9Hwz6Whxazmn85yYeVuS3u9XTMOGMRx0kO95MQ+vLsj/S/NwBDMMLU5hpxvI6Tklw==}
@@ -4262,6 +4270,10 @@ snapshots:
   node-mock-http@1.0.2: {}
 
   normalize-path@3.0.0: {}
+
+  obra-icons-svelte@1.23.1(svelte@5.38.2):
+    dependencies:
+      svelte: 5.38.2
 
   ofetch@1.4.1:
     dependencies:

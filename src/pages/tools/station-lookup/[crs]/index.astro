@@ -1,4 +1,5 @@
 ---
+import { IconCalendarWait } from 'obra-icons-svelte';
 import { getStation } from '$lib/data/stations';
 import Global from '$layouts/Global.astro';
 
@@ -12,7 +13,18 @@ if (!station) {
 <Global>
 	<section>
 		<h6>Station Lookup</h6>
-		<h1 class="name">{station.name}</h1>
+
+		<div class="name-area">
+			<h1 class="name">{station.name}</h1>
+
+			<a
+				href={`/tools/live-trains/${station.crs}`}
+				class="button icon"
+				title="Open live times"
+			>
+				<IconCalendarWait />
+			</a>
+		</div>
 	</section>
 
 	<section>
@@ -35,6 +47,12 @@ if (!station) {
 </Global>
 
 <style>
+	.name-area {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
 	.name {
 		text-transform: capitalize;
 	}
