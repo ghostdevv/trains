@@ -3,6 +3,7 @@ export const ERRORS = Object.freeze({
 	'rtt-station-not-found': 'No station matching this CRS was found on RTT',
 	'crs-not-found': 'No station matching this CRS was found',
 	unhandled: 'Unhandled error',
+	unknown: 'Unknown error',
 });
 
 type ErrorKey = keyof typeof ERRORS;
@@ -16,5 +17,5 @@ function isErrorKey(key: unknown): key is ErrorKey {
 }
 
 export function getErrorMessage(key: (string & {}) | ErrorKey) {
-	return isErrorKey(key) ? ERRORS[key] : null;
+	return isErrorKey(key) ? ERRORS[key] : ERRORS.unknown;
 }
