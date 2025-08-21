@@ -3,6 +3,7 @@ import { fzf } from '$lib/fuzzy-search';
 import type { APIRoute } from 'astro';
 
 function find(query: string): string | null {
+	// biome-ignore lint/style/noParameterAssign: it's ok
 	query = query.trim().toLowerCase();
 
 	const station =

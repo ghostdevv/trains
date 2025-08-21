@@ -2,7 +2,7 @@
 import { getErrorMessage } from '$lib/errors';
 import 'ghostsui';
 
-const error = getErrorMessage(Astro.url.searchParams.get('error'));
+const error = getErrorMessage(Astro.url.searchParams.get('error')!);
 ---
 
 <html lang="en">

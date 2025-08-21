@@ -25,7 +25,7 @@ export function fzf(needle: string, haystack: string) {
 	}
 
 	outer: for (let i = 0, j = 0; i < n; i++) {
-		let nch = needle.charCodeAt(i);
+		const nch = needle.charCodeAt(i);
 		while (j < h) {
 			if (haystack.charCodeAt(j++) === nch) {
 				continue outer;

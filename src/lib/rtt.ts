@@ -23,7 +23,7 @@ interface CacheResult {
 
 async function checkCache(CACHE: KVNamespace, prefix: string) {
 	const keys: string[] = [];
-	let cursor: string = '';
+	let cursor = '';
 
 	while (true) {
 		const results = await CACHE.list({
@@ -76,7 +76,7 @@ export async function fetchClasses(
 		const classes = new Set<number>();
 
 		for (const match of matches) {
-			const classNumber = parseInt(`${match[1]}`);
+			const classNumber = Number.parseInt(`${match[1]}`, 10);
 
 			if (typeof classNumber == 'number' && !Number.isNaN(classNumber)) {
 				classes.add(classNumber);
