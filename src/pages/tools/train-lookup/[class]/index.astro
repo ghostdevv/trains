@@ -7,13 +7,18 @@ const classNumber = Astro.params.class!;
 
 const wikipedia = await cached(
 	Astro.locals.runtime.env.CACHE,
-	`train-lookup:${classNumber}`,
+	`train-lookup-class:${classNumber}`,
 	async () => await fetchWikipediaTrainInfo(classNumber, Astro.locals),
 );
 
 if (!wikipedia) {
 	return Astro.redirect('/tools/train-lookup?error=train-not-in-wikipedia');
 }
+
+Astro.response.headers.set(
+	'Cache-Control',
+	'public, max-age=3600, s-max-age=3600',
+);
 ---
 
 <Global>

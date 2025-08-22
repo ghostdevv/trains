@@ -1,0 +1,68 @@
+---
+import Global from '$layouts/Global.astro';
+import { actions } from 'astro:actions';
+
+const result = Astro.getActionResult(actions.trainSearch);
+
+if (result) {
+	if (result.error || !result.data) {
+		return Astro.redirect(
+			`?error=${result.error || 'train-not-in-wikipedia'}`,
+		);
+	}
+}
+---
+
+<Global>
+	<h3>Train Lookup</h3>
+
+	<form action={actions.trainSearch} method="POST">
+		<label>
+			<span class="sr-only">Query/Class Number</span>
+			<input
+				type="search"
+				name="query"
+				value={result?.data?.query || ''}
+				placeholder="Query/Class Number..."
+				required
+			/>
+		</label>
+	</form>
+
+	{
+		Array.isArray(result?.data?.result) && (
+			<section>
+				<h4>Results:</h4>
+
+				<ul>
+					{result.data.result.map((result) => (
+						<li>
+							<a
+								href={`${Astro.url.pathname}/${result.classNumber}`}
+							>
+								Class {result.classNumber}
+							</a>
+						</li>
+					))}
+				</ul>
+			</section>
+		)
+	}
+</Global>
+
+<style lang="scss">
+	form {
+		display: flex;
+		flex-flow: row nowrap;
+		align-items: center;
+		justify-content: center;
+
+		label {
+			flex-grow: 1;
+		}
+	}
+
+	ul {
+		margin: 12px 0px;
+	}
+</style>

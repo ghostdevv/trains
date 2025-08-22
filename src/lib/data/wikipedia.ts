@@ -12,28 +12,28 @@ function constructURL(classNumber: string) {
 	return url.toString();
 }
 
-type MissingWikipediaPage = {
+type MissingTrainPage = {
 	missing: true;
 };
 
-type WikipediaPage = {
+type TrainPage = {
 	pageid: number;
 	title: string;
 	extract: string;
 	pageimage: string;
 };
 
-interface WikipediaResponse {
+type TrainPageResponse = {
 	query: {
-		pages: (WikipediaPage | MissingWikipediaPage)[];
+		pages: (TrainPage | MissingTrainPage)[];
 	};
-}
+};
 
 export async function fetchWikipediaTrainInfo(
 	classNumber: string,
 	locals: App.Locals,
 ) {
-	const data = await ofetch<WikipediaResponse>(constructURL(classNumber), {
+	const data = await ofetch<TrainPageResponse>(constructURL(classNumber), {
 		headers: {
 			'User-Agent': USER_AGENT,
 		},
@@ -57,4 +57,42 @@ export async function fetchWikipediaTrainInfo(
 		summary: summaryResponse.summary,
 		image: `https://commons.wikimedia.org/wiki/Special:FilePath/${page.pageimage}`,
 	};
+}
+
+type TrainPageSearchResult = {
+	title: string;
+};
+
+type TrainPageSearchResponse = {
+	query: {
+		search: TrainPageSearchResult[];
+	};
+};
+
+export async function searchWikipediaTrains(query: string) {
+	const url = new URL('https://en.wikipedia.org/w/api.php');
+	url.searchParams.append('action', 'query');
+	url.searchParams.append('format', 'json');
+	url.searchParams.append('formatversion', '2');
+	url.searchParams.append('list', 'search');
+	url.searchParams.append(
+		'srsearch',
+		`intitle:"British Rail Class" ${query}`,
+	);
+
+	const data = await ofetch<TrainPageSearchResponse>(url.toString(), {
+		headers: {
+			'User-Agent': USER_AGENT,
+		},
+	});
+
+	// todo show a description of the train in search ui
+	return data.query.search
+		.map((page) => ({
+			classNumber: Number.parseInt(
+				page.title.replace('British Rail Class', '').trim(),
+				10,
+			),
+		}))
+		.filter((result) => !Number.isNaN(result.classNumber));
 }
