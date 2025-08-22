@@ -1,4 +1,3 @@
-import type { KVNamespace } from '@cloudflare/workers-types';
 import { USER_AGENT } from './utils/user-agent';
 import { RTT_AUTH } from 'astro:env/server';
 import { ofetch } from 'ofetch';

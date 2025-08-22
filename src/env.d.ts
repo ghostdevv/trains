@@ -1,12 +1,7 @@
-/// <reference path="../.astro/db-types.d.ts" />
 /// <reference types="astro/client" />
 
+type Runtime = import('@astrojs/cloudflare').Runtime<Env>;
+
 declare namespace App {
-	interface Locals {
-		runtime: {
-			env: {
-				CACHE: import('@cloudflare/workers-types').KVNamespace;
-			};
-		};
-	}
+	interface Locals extends Runtime {}
 }
