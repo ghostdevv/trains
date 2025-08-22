@@ -1,0 +1,60 @@
+---
+import { fetchWikipediaTrainInfo } from '$lib/data/wikipedia';
+import Global from '$layouts/Global.astro';
+import { cached } from '$lib/data/cached';
+
+const classNumber = Astro.params.class!;
+
+const wikipedia = await cached(
+	Astro.locals.runtime.env.CACHE,
+	`train-lookup:${classNumber}`,
+	async () => await fetchWikipediaTrainInfo(classNumber, Astro.locals),
+);
+---
+
+<Global>
+	<section class="meta">
+		<h6>Train Lookup</h6>
+		<h1>Class {classNumber}</h1>
+		<p>{wikipedia?.summary || 'No Wikipedia entry found'}</p>
+
+		{
+			wikipedia && (
+				<img
+					src={`https://wsrv.nl?url=${wikipedia.image}&w=580`}
+					alt="Wikipedia page image for Class {classNumber}"
+				/>
+			)
+		}
+	</section>
+</Global>
+
+<style>
+	.meta {
+		display: grid;
+		grid-template-columns: 1fr 400px;
+		grid-template-rows: max-content max-content 1fr;
+		grid-template-areas: '. image' '. image' '. image';
+		align-items: start;
+		gap: 0px 16px;
+
+		@media (max-width: 768px) {
+			grid-template-columns: 1fr;
+			grid-template-rows: repeat(4, max-content);
+			grid-template-areas: '.' '.' '.' 'image';
+
+			img {
+				margin: 12px 0px;
+			}
+		}
+
+		img {
+			grid-area: image;
+			border-radius: 12px;
+			max-width: 100%;
+			height: auto;
+			aspect-ratio: 16 / 9;
+			object-fit: cover;
+		}
+	}
+</style>
