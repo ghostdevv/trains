@@ -10,22 +10,21 @@ const wikipedia = await cached(
 	`train-lookup:${classNumber}`,
 	async () => await fetchWikipediaTrainInfo(classNumber, Astro.locals),
 );
+
+if (!wikipedia) {
+	return Astro.redirect('/tools/train-lookup?error=train-not-in-wikipedia');
+}
 ---
 
 <Global>
 	<section class="meta">
 		<h6>Train Lookup</h6>
 		<h1>Class {classNumber}</h1>
-		<p>{wikipedia?.summary || 'No Wikipedia entry found'}</p>
-
-		{
-			wikipedia && (
-				<img
-					src={`https://wsrv.nl?url=${wikipedia.image}&w=580`}
-					alt="Wikipedia page image for Class {classNumber}"
-				/>
-			)
-		}
+		<p>{wikipedia.summary}</p>
+		<img
+			src={`https://wsrv.nl?url=${wikipedia.image}&w=580`}
+			alt="Wikipedia page image for Class {classNumber}"
+		/>
 	</section>
 </Global>
 

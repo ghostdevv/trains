@@ -3,6 +3,7 @@ export const ERRORS = Object.freeze({
 		'Unable to find a station matching that search query',
 	'rtt-station-not-found': 'No station matching this CRS was found on RTT',
 	'crs-not-found': 'No station matching this CRS was found',
+	'train-not-in-wikipedia': 'Train Class not found in Wikipedia',
 	unhandled: 'Unhandled error',
 	unknown: 'Unknown error',
 });
