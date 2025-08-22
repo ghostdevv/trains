@@ -1,0 +1,47 @@
+---
+import Global from '$layouts/Global.astro';
+---
+
+<Global>
+	<div class="links">
+		<a href="/tools/live-trains" class="button outline">
+			Live Train Times
+		</a>
+		<a href="/tools/station-lookup" class="button outline">
+			Station Lookup
+		</a>
+		<a href="/tools/train-lookup" class="button outline"> Train Lookup </a>
+	</div>
+</Global>
+
+<style>
+	.links {
+		width: 100%;
+		height: 100%;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 16px;
+
+		a {
+			font-size: 2rem;
+			padding: 32px 64px;
+			text-align: center;
+		}
+
+		@media (max-width: 768px) {
+			flex-direction: column;
+			align-items: stretch;
+			gap: 8px;
+
+			a {
+				display: grid;
+				place-items: center;
+				font-size: 3rem;
+				flex-basis: 33%;
+				padding: 16px;
+			}
+		}
+	}
+</style>
