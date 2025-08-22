@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Global from '$layouts/Global.astro';
+import './_wiki.css';
 
 export async function getStaticPaths() {
 	const collection = await getCollection('wiki');
@@ -20,5 +21,7 @@ const { Content } = await render(page);
 ---
 
 <Global>
-	<Content />
+	<div class="wiki-page">
+		<Content />
+	</div>
 </Global>

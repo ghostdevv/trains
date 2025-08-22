@@ -1,0 +1,29 @@
+.wiki-page {
+	display: contents;
+
+	& > :first-child {
+		margin-top: 0px;
+	}
+
+	h1 {
+		padding: 8px 0px;
+		border-bottom: 4px solid var(--background-secondary);
+	}
+
+	h1,
+	h2 {
+		font-weight: 600;
+		margin-top: 40px;
+		color: #fff;
+	}
+
+	h3,
+	h4 {
+		font-weight: 600;
+		margin-top: 28px;
+	}
+
+	p {
+		margin: 12px 0px;
+	}
+}
