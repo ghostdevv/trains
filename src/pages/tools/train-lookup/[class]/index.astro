@@ -1,7 +1,9 @@
 ---
 import { fetchWikipediaTrainInfo } from '$lib/data/wikipedia';
+import WikipediaLogo from '$lib/vendor/Wikipedia.svg';
 import Global from '$layouts/Global.astro';
 import { cached } from '$lib/data/cached';
+import { IconLink } from 'obra-icons-svelte';
 
 const classNumber = Astro.params.class!;
 
@@ -24,7 +26,12 @@ Astro.response.headers.set(
 <Global>
 	<section class="meta">
 		<h6>Train Lookup</h6>
-		<h1>Class {classNumber}</h1>
+		<div class="title-container">
+			<h1>Class {classNumber}</h1>
+			<a href={wikipedia.link} target="_blank" class="button icon">
+				<WikipediaLogo />
+			</a>
+		</div>
 		<p>{wikipedia.summary}</p>
 		<img
 			src={`https://wsrv.nl?url=${wikipedia.image}&w=580`}
@@ -34,6 +41,12 @@ Astro.response.headers.set(
 </Global>
 
 <style>
+	.title-container {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+
 	.meta {
 		display: grid;
 		grid-template-columns: 1fr 400px;
