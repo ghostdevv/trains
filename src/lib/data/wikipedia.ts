@@ -69,7 +69,14 @@ type TrainPageSearchResponse = {
 	};
 };
 
-export async function searchWikipediaTrains(query: string) {
+export async function searchWikipediaTrains(query: string, locals: App.Locals) {
+	if (query.length <= 3 && Number.parseInt(query, 10)) {
+		const data = await fetchWikipediaTrainInfo(query, locals);
+		if (data) {
+			return [{ classNumber: Number.parseInt(query, 10) }];
+		}
+	}
+
 	const url = new URL('https://en.wikipedia.org/w/api.php');
 	url.searchParams.append('action', 'query');
 	url.searchParams.append('format', 'json');

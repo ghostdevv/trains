@@ -48,7 +48,7 @@ export const server = {
 			const result = await cached(
 				ctx.locals.runtime.env.CACHE,
 				`train-lookup:${queryHash}`,
-				async () => await searchWikipediaTrains(query),
+				async () => await searchWikipediaTrains(query, ctx.locals),
 			);
 
 			return {

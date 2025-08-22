@@ -10,6 +10,12 @@ if (result) {
 			`?error=${result.error || 'train-not-in-wikipedia'}`,
 		);
 	}
+
+	if (result.data.result.length === 1) {
+		return Astro.redirect(
+			`/tools/train-lookup/${result.data.result[0].classNumber}`,
+		);
+	}
 }
 ---
 
