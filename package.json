@@ -38,9 +38,9 @@
 			"workerd"
 		]
 	},
-	"packageManager": "pnpm@10.15.0",
+	"packageManager": "pnpm@10.18.3",
 	"volta": {
-		"node": "22.18.0",
-		"pnpm": "10.15.0"
+		"node": "24.10.0",
+		"pnpm": "10.18.3"
 	}
 }

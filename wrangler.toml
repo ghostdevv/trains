@@ -22,3 +22,6 @@ enabled = true
 [[kv_namespaces]]
 binding = "CACHE"
 id = "75f60ecca7d94dcdb6458dbbcf6b0b2b"
+
+[vars]
+NODE_VERSION = "10.18.3"
