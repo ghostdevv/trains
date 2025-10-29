@@ -1,6 +1,7 @@
 ---
 import type { LiveTimes } from '$lib/types/liveTimes.d.ts';
 import TimeTable from '$lib/time-table/TimeTable.astro';
+import Breadcrumbs from '$lib/Breadcrumbs.astro';
 import { getStation } from '$lib/data/stations';
 import Global from '$layouts/Global.astro';
 import { rtt } from '$lib/rtt';
@@ -22,7 +23,7 @@ if (!data || !data.location) {
 
 <Global>
 	<section>
-		<h6>Live Train Times</h6>
+		<Breadcrumbs />
 		<h1>{data.location.name} ({data.location.crs.toUpperCase()})</h1>
 		<p>{data.services?.length ?? 0} services</p>
 	</section>

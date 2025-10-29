@@ -1,5 +1,6 @@
 ---
 import { IconCalendarWait } from 'obra-icons-svelte';
+import Breadcrumbs from '$lib/Breadcrumbs.astro';
 import { getStation } from '$lib/data/stations';
 import Global from '$layouts/Global.astro';
 
@@ -12,7 +13,7 @@ if (!station) {
 
 <Global>
 	<section>
-		<h6>Station Lookup</h6>
+		<Breadcrumbs />
 
 		<div class="name-area">
 			<h1 class="name">{station.name} ({station.crs.toUpperCase()})</h1>

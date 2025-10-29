@@ -1,4 +1,5 @@
 ---
+import Breadcrumbs from '$lib/Breadcrumbs.astro';
 import Global from '$layouts/Global.astro';
 import { actions } from 'astro:actions';
 
@@ -20,6 +21,7 @@ if (result) {
 ---
 
 <Global>
+	<Breadcrumbs />
 	<h3>Train Lookup</h3>
 
 	<form action={actions.trainSearch} method="POST">

@@ -1,5 +1,6 @@
 ---
 import StationSearch from '$lib/forms/StationSearch.astro';
+import Breadcrumbs from '$lib/Breadcrumbs.astro';
 import Global from '$layouts/Global.astro';
 import { actions } from 'astro:actions';
 
@@ -19,6 +20,7 @@ if (result) {
 ---
 
 <Global>
+	<Breadcrumbs />
 	<h3>Live Train Times</h3>
 	<StationSearch />
 </Global>
